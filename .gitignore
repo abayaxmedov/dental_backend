@@ -1,8 +1,11 @@
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+
+# Virtual environments
 env/
 venv/
 .venv/
@@ -10,44 +13,52 @@ ENV/
 env.bak/
 venv.bak/
 
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Django
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media/
 staticfiles/
-*.pot
-*.pyc
 
-.env
-.env.*
-!.env.example
+# Logs
+logs/
+*.log
+*.pid
 
+# Coverage / tests
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+*.mo
+
+# IDE
 .vscode/
 .idea/
 *.iml
 
+# macOS
 .DS_Store
 
-*.env
-docker-compose.override.yml
-*.pid
-
-*.mo
-*.coverage
-htmlcov/
-.pytest_cache/
-
-logs/
-*.log
-
+# Node
 node_modules/
 dist/
 build/
 
+# Security
 *.pem
 *.key
 *.crt
 
+# Docker
+docker-compose.override.yml
+
+# Misc
 *.bak
 *.swp
