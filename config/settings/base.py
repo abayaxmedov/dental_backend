@@ -213,7 +213,8 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,
     "SERVERS": [
-        {"url": "http://127.0.0.1:8000", "description": "Local Development"},
+        {"url": "http://http://52.55.79.225:8000/"}
+        # {"url": "http://127.0.0.1:8000", "description": "Local Development"},
     ],
 }
 

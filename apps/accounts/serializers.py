@@ -26,8 +26,17 @@ class RegisterSerializer(serializers.ModelSerializer):
                   'first_name', 'last_name']
     
     def validate(self, attrs):
+        import logging
+        logger = logging.getLogger("django")
+
+        logger.warning("🔥Validate password ichida")
         if attrs.get('password') != attrs.get('password_confirm'):
             raise serializers.ValidationError({"password": "Passwords do not match"})
+
+        import logging
+        logger = logging.getLogger("django")
+
+        logger.warning("🔥Validate password dan o'tdi")
         attrs.pop('password_confirm')
         return attrs
     
