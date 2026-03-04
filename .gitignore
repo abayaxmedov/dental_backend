@@ -59,6 +59,10 @@ build/
 # Docker
 docker-compose.override.yml
 
+# Sockets
+*.sock
+gunicorn.ctl
+
 # Misc
 *.bak
 *.swp

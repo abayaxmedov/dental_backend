@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+env/
+
+# Django
+*.log
+db.sqlite3
+staticfiles/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Sockets
+*.sock
+gunicorn.ctl
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+Dockerfile
+
+# Misc
+.env
+.env.*
+.coverage
+htmlcov/
