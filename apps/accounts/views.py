@@ -7,27 +7,10 @@ from .serializers import RegisterSerializer, CustomTokenObtainPairSerializer, Us
 
 
 class RegisterView(generics.CreateAPIView):
-    """User registration endpoint."""
-    
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
-    
-    @extend_schema(
-        request=RegisterSerializer,
-        responses={201: UserSerializer},
-        description="Register a new user"
-    )
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return Response(
-            UserSerializer(user).data,
-            status=status.HTTP_201_CREATED
-        )
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
-    """Custom JWT token obtain view with user data."""
-    
+    permissin_classes = [AllowAny]
     serializer_class = CustomTokenObtainPairSerializer

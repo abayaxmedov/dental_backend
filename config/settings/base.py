@@ -239,6 +239,6 @@ SIMPLE_JWT = {
 # ALLAUTH
 # =====================================================
 ACCOUNT_ALLOW_REGISTRATION = True
-ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGIN_METHODS = ['username']
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'password1*', 'password2*']

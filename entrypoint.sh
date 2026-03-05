@@ -9,7 +9,7 @@ done
 echo "PostgreSQL started"
 
 # Stale socket faylini tozalash
-rm -f /app/gunicorn.ctl
+rm -f /tmp/gunicorn.ctl
 
 python manage.py migrate
 python manage.py collectstatic --noinput
@@ -17,4 +17,5 @@ exec gunicorn config.wsgi:application \
     --bind 0.0.0.0:8000 \
     --workers 1 \
     --threads 2 \
-    --timeout 60
+    --timeout 60 \
+    --control-socket /tmp/gunicorn.ctl
