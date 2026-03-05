@@ -18,15 +18,19 @@ class RegisterView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
+#
+# class CustomTokenObtainPairView(TokenObtainPairView):
+#     permission_classes = [AllowAny]
+#     serializer_class = CustomTokenObtainPairSerializer
+#
+#     @extend_schema(
+#         summary="User Login",
+#         description="Login with username and password to get access and refresh tokens",
+#         tags=["Authentication"],
+#     )
+#     def post(self, request, *args, **kwargs):
+#         return super().post(request, *args, **kwargs)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     permission_classes = [AllowAny]
     serializer_class = CustomTokenObtainPairSerializer
-    
-    @extend_schema(
-        summary="User Login",
-        description="Login with username and password to get access and refresh tokens",
-        tags=["Authentication"],
-    )
-    def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
