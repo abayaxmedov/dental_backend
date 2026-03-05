@@ -37,7 +37,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password")
 
         user = CustomUser(**validated_data)
-        user.set_password("password")
+        user.set_password(password)
+        user.save()
         return user
 
 
@@ -55,4 +56,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         data["user"] = UserSerializer(self.user).data
+        data["access"] = str(data["access"])
+        data["refresh"] = str(data["refresh"])
         return data
