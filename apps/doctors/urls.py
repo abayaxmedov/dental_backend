@@ -11,7 +11,7 @@ from .views import DoctorViewSet, SpecializationViewSet, DoctorCreateAPIView
 urllpatterns =[
      path("create/", DoctorCreateAPIView.as_view(), name="doctor-create"),
      path('specializations', SpecializationViewSet, name='specialization'),
-     path('', DoctorViewSet, basename='doctor')
+     path('', DoctorViewSet, name='doctor')
 ]
 #
 # urlpatterns = router.urls
