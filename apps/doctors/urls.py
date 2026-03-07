@@ -8,7 +8,7 @@ from .views import DoctorViewSet, SpecializationViewSet, DoctorCreateAPIView
 # router.register('specializations', SpecializationViewSet, basename='specialization')
 # router.register('', DoctorViewSet, basename='doctor')
 
-urllpatterns =[
+urlpatterns =[
      path("create/", DoctorCreateAPIView.as_view(), name="doctor-create"),
      path('specializations', SpecializationViewSet, name='specialization'),
      path('', DoctorViewSet, name='doctor')
