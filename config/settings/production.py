@@ -20,6 +20,18 @@ STORAGES = {
 # Production-specific settings
 DEBUG = False
 
+# Force PostgreSQL in production to avoid accidental sqlite configuration.
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("DB_NAME", default="dental"),
+        "USER": config("DB_USER", default="dental_user"),
+        "PASSWORD": config("DB_PASSWORD", default="dental_pass"),
+        "HOST": config("DB_HOST", default="db"),
+        "PORT": config("DB_PORT", default="5432"),
+    }
+}
+
 # HTTP-only deployment: force-disable HTTPS-related security redirects/flags.
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = False
