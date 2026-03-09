@@ -19,6 +19,8 @@ services:
     build: .
     container_name: dental_web
     restart: always
+    environment:
+      ENVIRONMENT: production
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
