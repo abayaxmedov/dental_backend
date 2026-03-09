@@ -1,15 +1,18 @@
-
 services:
   db:
     image: postgres:15
-    container_name: dental_db
-    restart: always
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: dental
-      POSTGRES_USER: dental_user
-      POSTGRES_PASSWORD: dental_pass
+      POSTGRES_DB: ${DB_NAME:-dental}
+      POSTGRES_USER: ${DB_USER:-dental_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-dental_pass}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-dental_user} -d ${DB_NAME:-dental}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     deploy:
       resources:
         limits:
@@ -17,17 +20,19 @@ services:
 
   web:
     build: .
-    container_name: dental_web
-    restart: always
+    restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      ENVIRONMENT: production
+      ENVIRONMENT: ${ENVIRONMENT:-production}
     volumes:
-      - .:/app
       - static_volume:/app/staticfiles
+      - media_volume:/app/media
     expose:
       - 8000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -35,16 +40,17 @@ services:
 
   nginx:
     image: nginx:stable-alpine
-    container_name: dental_nginx
-    restart: always
+    restart: unless-stopped
     ports:
       - "80:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - static_volume:/app/staticfiles
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - static_volume:/app/staticfiles:ro
+      - media_volume:/app/media:ro
     depends_on:
       - web
 
 volumes:
   postgres_data:
   static_volume:
+  media_volume:

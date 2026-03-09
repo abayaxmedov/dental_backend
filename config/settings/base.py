@@ -1,13 +1,12 @@
 from datetime import timedelta
 from pathlib import Path
-from decouple import Config, RepositoryEnv, Csv
+from decouple import AutoConfig, Csv
 
 # =====================================================
 # BASE DIR
 # =====================================================
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-env_file = BASE_DIR / ".env"
-config = Config(RepositoryEnv(env_file))
+config = AutoConfig(search_path=BASE_DIR)
 
 # =====================================================
 # CORE
@@ -174,7 +173,12 @@ MEDIA_ROOT = BASE_DIR / config("MEDIA_ROOT", default="media")
 CORS_ALLOW_ALL_ORIGINS = config(
     "CORS_ALLOW_ALL_ORIGINS",
     cast=bool,
-    default=True
+    default=False
+)
+CORS_ALLOWED_ORIGINS = config(
+    "CORS_ALLOWED_ORIGINS",
+    cast=Csv(),
+    default=""
 )
 CORS_ALLOW_CREDENTIALS = True
 
@@ -206,16 +210,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # =====================================================
 # DRF SPECTACULAR
 # =====================================================
+API_BASE_URL = config("API_BASE_URL", default="")
+
 SPECTACULAR_SETTINGS = {
     "TITLE": "Dental Clinic API",
     "DESCRIPTION": "API documentation for Dental Clinic",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,
-    "SERVERS": [
-        {"url": "http://52.55.79.225"}
-        # {"url": "http://127.0.0.1:8000", "description": "Local Development"},
-    ],
+    "SERVERS": [{"url": API_BASE_URL}] if API_BASE_URL else [],
 }
 
 # =====================================================
@@ -244,11 +247,13 @@ ACCOUNT_LOGIN_METHODS = ['username']
 ACCOUNT_SIGNUP_FIELDS = ['username*', 'password1*', 'password2*']
 
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://52.55.79.225",
-]
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS",
+    cast=Csv(),
+    default=""
+)
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", cast=bool, default=False)
+CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", cast=bool, default=False)
