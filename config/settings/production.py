@@ -1,5 +1,22 @@
 from .base import *
 
+
+INSTALLED_APPS.insert(
+    INSTALLED_APPS.index("django.contrib.staticfiles"),
+    "whitenoise.runserver_nostatic",
+)
+
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
 # Production-specific settings
 DEBUG = False
 
